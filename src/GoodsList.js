@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import Good from "./Good";
 import CartGood from "./CartGood"
 import {Link} from "react-router-dom";
+import Filter from './Filter'
 
 
 class GoodsList extends Component {
@@ -31,7 +32,7 @@ class GoodsList extends Component {
     
     ShopGoodsList() {
         const quantities = this.props.quantities
-        const goodsList = this.props.goods.map(item =>
+        const goodsList = Array.from(this.props.goods).map(item =>
             <Good good={item}
                   key = {item.id}
                   id = {item.id}
@@ -39,6 +40,7 @@ class GoodsList extends Component {
                   quantity = {quantities[item.id]}
             />);
         return <div>
+            <Filter onFilterChange = {this.props.onFilterChange}/>
             <div className="row">
                 <div className="col-md-1"><span className="font-weight-bold">Название</span></div>
                 <div className="col-md-1"><span className="font-weight-bold">Цена</span></div>

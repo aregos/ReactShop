@@ -3,7 +3,7 @@ import './App.css';
 import Shop from './Shop'
 import Cart from './Cart'
 import goods from "./goods"
-import { Link , Route} from "react-router-dom";
+import { Link , Route } from "react-router-dom";
 
 class App extends Component {
 
@@ -12,6 +12,7 @@ class App extends Component {
         this.state = {
             goods : goods,
             quantities : Array(goods.length).fill(0),
+            filter : ''
         }
 
     }
@@ -30,6 +31,19 @@ class App extends Component {
             default:
                 return this.state
         }
+    }
+
+    onFilterChange = (text) => {
+        this.setState({
+            filter : text
+        })
+    }
+
+     filterByName = () => {
+        const { goods, filter } = this.state
+        return goods.filter(item =>
+                 (item.title.toLowerCase()).includes(filter.toLowerCase())
+        )
     }
 
     deleteAllThisGood = index => {
@@ -75,9 +89,10 @@ renderCart = () => {
                  return (
                      <div>
          <h1>Shop</h1>
-        <Shop goods = {this.state.goods}
+        <Shop goods = {this.filterByName()}
               quantities = {this.state.quantities}
               onQuantityChange = {this.onQuantityChange}
+              onFilterChange = {this.onFilterChange}
         />
                          <button className="btn">
          <Link to="/cart">Корзина</Link>
